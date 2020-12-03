@@ -1,25 +1,20 @@
 ## items
 
-| Colum             |Type     |Options                          |
-| name              | string  | null: false                     |
-| price             | integer | null: false                     |
-| description       | text    | null: false                     |
-| item_condition_id | integer | null: false, foreign_key: :true |
-| category_id       | integer | null: false, foreign_key: :true |
-| shipping_area_id  | integer | null: false, foreign_key: :true |
-| postage_type_id   | integer | null: false, foreign_key: :true |
-| preparation_day_id| integer | null: false, foreign_key: :true |
-| user_id           | integer | null: false, foreign_key: :true |
+| Colum             |Type       |Options                          |
+| name              | string    | null: false                     |
+| price             | integer   | null: false                     |
+| description       | text      | null: false                     |
+| item_condition_id | integer   | null: false, foreign_key: :true |
+| category_id       | integer   | null: false, foreign_key: :true |
+| shipping_area_id  | integer   | null: false, foreign_key: :true |
+| postage_type_id   | integer   | null: false, foreign_key: :true |
+| preparation_day_id| integer   | null: false, foreign_key: :true |
+| user_id           | references| null: false, foreign_key: :true |
 
 
 ### Association
 has_many :comments, dependent: :destroy
-belongs_to_active_hash :postage_type
-belongs_to_active_hash :item_condition
-belongs_to_active_hash :category
-belongs_to_active_hash :preparation_day
-belongs_to_active_hash :shipping_area
-has_many :purchase_managements
+has_one :purchase_management
 belongs_to :user
 
 
@@ -30,7 +25,6 @@ belongs_to :user
 |user        |references |null: false, foreign_key: :true|
 |item        |references |null: false, foreign_key: :true|
 |comment     |text       |null: false                    |
-|created_at  |timestamp  |null: false                    |
 
 ### Association
 belongs_to :user
@@ -52,7 +46,7 @@ belongs_to :item
 
 ### Association
 has_many :comments, dependent: :destroy
-has_many :purchase_managements, dependent: :destroy
+belongs_to :purchase_management, dependent: :destroy
 has_many :items, dependent: :destroy
 
 
@@ -60,22 +54,27 @@ has_many :items, dependent: :destroy
 
 ## purchase_managements
 
-|Column|Type   |Options     |
+|Column |Type      |Options                         |
 |user_id|references|null :false, foreign_key: :true |
 |item_id|references|null :false, foreign_key: :true |
-|address|text      |null :false, foreign_key: :true |
 
 ### Association
 belongs_to :user
 has_many :items
-belongs_to :address
+has_one :address
 
 
 ## addresses
 
-|Column |Type|Options                         |
-|address|text|null :false, foreign_key: :true |
+|Column           |Type      |Options                        |
+|postal_code      |integer   |null :false                    |
+|prefectures_code |integer   |null :false                    |
+|municipality_code|integer   |null :false                    |
+|address          |text      |null :false, foreign_key: :true|
+|building_code    |string    |
+|phone_number     |integer   |null :false                    |
+|user_id          |references|null :false, foreign_key: :true|
 
 ### Association
-has_many :purchase_managements
+belongs_to :purchase_management
 
