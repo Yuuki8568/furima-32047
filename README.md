@@ -9,7 +9,7 @@
 | shipping_area_id  | integer   | null: false, foreign_key: :true |
 | postage_type_id   | integer   | null: false, foreign_key: :true |
 | preparation_day_id| integer   | null: false, foreign_key: :true |
-| user_id           | references| null: false, foreign_key: :true |
+| user              | references| null: false, foreign_key: :true |
 
 
 ### Association
@@ -73,7 +73,7 @@ has_one :address
 |address            |text      |null :false, foreign_key: :true|
 |building_code      |string    |
 |phone_number       |string    |null :false                    |
-|user_id            |references|null :false, foreign_key: :true|
+|user               |references|null :false, foreign_key: :true|
 
 ### Association
 belongs_to :purchase_management
