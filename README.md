@@ -60,7 +60,7 @@ has_many :items, dependent: :destroy
 
 ### Association
 belongs_to :user
-has_many :items
+belongs_to :item
 has_one :address
 
 
@@ -69,12 +69,12 @@ has_one :address
 |Column             |Type      |Options                        |
 |postal_code        |string    |null :false                    |
 |prefectures_code_id|integer   |null :false                    |
-|municipality_code  |integer   |null :false                    |
+|municipality_code  |string    |null :false                    |
 |address            |text      |null :false, foreign_key: :true|
 |building_code      |string    |
-|phone_number       |integer   |null :false                    |
+|phone_number       |string    |null :false                    |
 |user_id            |references|null :false, foreign_key: :true|
 
 ### Association
-has_many :purchase_managements
+belongs_to :purchase_management
 
