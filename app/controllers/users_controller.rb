@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   def new
     @user = User.new
   end
@@ -13,10 +12,9 @@ class UsersController < ApplicationController
     end
   end
 
+  private
 
-    private
-
-    def user_params
-      params.require(:user).permit(:nickname, :first_name, :first_name_kana, :last_name, :last_name_kana, :birth_day).merge(user_id: current_user.id)
-    end
+  def user_params
+    params.require(:user).permit(:nickname, :first_name, :first_name_kana, :last_name, :last_name_kana, :birth_day).merge(user_id: current_user.id)
+  end
 end
