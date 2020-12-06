@@ -2,10 +2,21 @@ require 'rails_helper'
 
 describe User do
   describe '#create' do
+  context '新規登録がうまくいくとき' do
+
     it '全ての項目の入力が存在すれば登録できること' do
       user = build(:user)
       expect(user).to be_valid
     end
+
+    it 'passwordが6文字以上であれば登録できること' do
+      user = build(:user, password: '123abc', encrypted_password: '123abc')
+      expect(user).to be_valid
+    end
+    
+  end
+
+  context '新規登録がうまくいかないとき' do
 
     it 'nicknameがない場合は登録できないこと' do
       user = build(:user, nickname: nil)
@@ -61,15 +72,22 @@ describe User do
       expect(user.errors[:birth_day]).to include("を入力してください")
     end
 
-    it 'passwordが7文字以上であれば登録できること' do
-      user = build(:user, password: '1234567', encrypted_password: '1234567')
-      expect(user).to be_valid
+    it 'passwordが英語のみでは登録できないこと' do
+    user = build(:user, password: 'abcdef')
+    user.valid?
+    expect(user.errors[:password]).to include("は不正な値です")
+    end 
+
+    it 'passwordが数字のみでは登録できないこと' do
+    user = build(:user, password: '123456')
+    user.valid?
+    expect(user.errors[:password]).to include("は不正な値です")
     end
 
-    it 'passwordが7文字以下であれば登録できないこと' do
-      user = build(:user, password: '123456', encrypted_password: '123456')
+    it 'passwordが5文字以下であれば登録できないこと' do
+      user = build(:user, password: '123ab', encrypted_password: '123ab')
       user.valid?
-      expect(user.errors[:encrypted_password]).to include("は7文字以上で入力してください")
+      expect(user.errors[:encrypted_password]).to include("は6文字以上で入力してください")
     end
 
     it '重複したemailが存在する場合登録できないこと' do
@@ -82,7 +100,7 @@ describe User do
     it 'passwordが存在してもencrypted_passwordがない場合は登録できないこと' do
       user = build(:user, encrypted_password: "")
       user.valid?
-      expect(user.errors[:encrypted_password]).to include("を入力してください", "は7文字以上で入力してください")
+      expect(user.errors[:encrypted_password]).to include("を入力してください", "は6文字以上で入力してください")
     end
 
     it 'last_nameが全角入力でなければ登録できないこと' do
@@ -106,7 +124,9 @@ describe User do
     it 'first_name_kanaが全角カタカナでなければ登録できないこと' do
       user = build(:user, first_name_kana: 'あいうえお')
       user.valid?
-      expect(user.errors[:first_name_kana]).to include(("は不正な値です")
+      expect(user.errors[:first_name_kana]).to include("は不正な値です")
     end
+  end
+
   end
 end
