@@ -10,55 +10,55 @@ describe User do
     it 'nicknameがない場合は登録できないこと' do
       user = build(:user, nickname: nil)
       user.valid?
-      expect(user.errors.full_messages).to include("Nickname can't be blank")
+      expect(user.errors[:nickname]).to include("を入力してください")
     end
 
     it 'emailがない場合は登録できないこと' do
       user = build(:user, email: nil)
       user.valid?
-      expect(user.errors.full_messages).to include("Email can't be blank")
+      expect(user.errors[:email]).to include("を入力してください")
     end
 
     it 'passwordがない場合は登録できないこと' do
       user = build(:user, password: nil)
       user.valid?
-      expect(user.errors.full_messages).to include("Password can't be blank")
+      expect(user.errors[:password]).to include("を入力してください")
     end
 
     it 'encrypted_passwordがない場合は登録できないこと' do
       user = build(:user, encrypted_password: nil)
       user.valid?
-      expect(user.errors.full_messages).to include("Encrypted password can't be blank")
+      expect(user.errors[:encrypted_password]).to include("を入力してください")
     end
 
     it 'last_nameがない場合は登録できないこと' do
       user = build(:user, last_name: nil)
       user.valid?
-      expect(user.errors.full_messages).to include("Last name can't be blank")
+      expect(user.errors[:last_name]).to include("を入力してください")
     end
 
     it 'last_name_kanaがない場合は登録できないこと' do
       user = build(:user, last_name_kana: nil)
       user.valid?
-      expect(user.errors.full_messages).to include("Last name kana can't be blank")
+      expect(user.errors[:last_name_kana]).to include("を入力してください")
     end
 
     it 'first_nameがない場合は登録できないこと' do
       user = build(:user, first_name: nil)
       user.valid?
-      expect(user.errors.full_messages).to include("First name can't be blank")
+      expect(user.errors[:first_name]).to include("を入力してください")
     end
 
     it 'first_name_kanaがない場合は登録できないこと' do
       user = build(:user, first_name_kana: nil)
       user.valid?
-      expect(user.errors.full_messages).to include("First name kana can't be blank")
+      expect(user.errors[:first_name_kana]).to include("を入力してください")
     end
 
     it 'birth_dayがない場合は登録できないこと' do
       user = build(:user, birth_day: nil)
       user.valid?
-      expect(user.errors.full_messages).to include("Birth day can't be blank")
+      expect(user.errors[:birth_day]).to include("を入力してください")
     end
 
     it 'passwordが7文字以上であれば登録できること' do
@@ -69,44 +69,44 @@ describe User do
     it 'passwordが7文字以下であれば登録できないこと' do
       user = build(:user, password: '123456', encrypted_password: '123456')
       user.valid?
-      expect(user.errors.full_messages).to include('Encrypted password is too short (minimum is 7 characters)')
+      expect(user.errors[:encrypted_password]).to include("は7文字以上で入力してください")
     end
 
     it '重複したemailが存在する場合登録できないこと' do
       user = create(:user)
       another_user = build(:user, email: user.email)
       another_user.valid?
-      expect(another_user.errors.full_messages).to include('Email has already been taken')
+      expect(another_user.errors[:email]).to include("はすでに存在します")
     end
 
     it 'passwordが存在してもencrypted_passwordがない場合は登録できないこと' do
-      user = build(:user, encrypted_password: '')
+      user = build(:user, encrypted_password: "")
       user.valid?
-      expect(user.errors.full_messages).to include("Encrypted password can't be blank", 'Encrypted password is too short (minimum is 7 characters)')
+      expect(user.errors[:encrypted_password]).to include("を入力してください", "は7文字以上で入力してください")
     end
 
-    it 'family_nameが全角入力でなければ登録できないこと' do
+    it 'last_nameが全角入力でなければ登録できないこと' do
       user = build(:user, last_name: 'ｱｲｳｴｵ')
       user.valid?
-      expect(user.errors.full_messages).to include('Last name is invalid')
+      expect(user.errors[:last_name]).to include("は不正な値です")
     end
 
     it 'first_nameが全角入力でなければ登録できないこと' do
       user = build(:user, first_name: 'ｱｲｳｴｵ')
       user.valid?
-      expect(user.errors.full_messages).to include('First name is invalid')
+      expect(user.errors[:first_name]).to include("は不正な値です")
     end
 
-    it 'family_name_kanaが全角カタカナでなければ登録できないこと' do
+    it 'last_name_kanaが全角カタカナでなければ登録できないこと' do
       user = build(:user, last_name_kana: 'あいうえお')
       user.valid?
-      expect(user.errors.full_messages).to include('Last name kana is invalid')
+      expect(user.errors[:last_name_kana]).to include("は不正な値です")
     end
 
     it 'first_name_kanaが全角カタカナでなければ登録できないこと' do
       user = build(:user, first_name_kana: 'あいうえお')
       user.valid?
-      expect(user.errors.full_messages).to include('First name kana is invalid')
+      expect(user.errors[:first_name_kana]).to include(("は不正な値です")
     end
   end
 end
