@@ -31,3 +31,11 @@
 
 en:
   hello: "Hello world"
+
+  en:
+  errors:
+    messages:
+      blank: "を入力してください"
+      too_short: "は6文字以上で入力してください"
+      invalid: "は不正な値です"
+      taken: "はすでに存在します"
