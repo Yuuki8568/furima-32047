@@ -36,12 +36,6 @@ describe User do
       expect(user.errors[:password]).to include("を入力してください")
     end
 
-    it 'encrypted_passwordがない場合は登録できないこと' do
-      user = build(:user, encrypted_password: nil)
-      user.valid?
-      expect(user.errors[:encrypted_password]).to include("を入力してください")
-    end
-
     it 'last_nameがない場合は登録できないこと' do
       user = build(:user, last_name: nil)
       user.valid?
@@ -85,9 +79,9 @@ describe User do
     end
 
     it 'passwordが5文字以下であれば登録できないこと' do
-      user = build(:user, password: '123ab', encrypted_password: '123ab')
+      user = build(:user, password: '123ab')
       user.valid?
-      expect(user.errors[:encrypted_password]).to include("は6文字以上で入力してください")
+      expect(user.errors[:password]).to include("は6文字以上で入力してください")
     end
 
     it '重複したemailが存在する場合登録できないこと' do
@@ -95,12 +89,6 @@ describe User do
       another_user = build(:user, email: user.email)
       another_user.valid?
       expect(another_user.errors[:email]).to include("はすでに存在します")
-    end
-
-    it 'passwordが存在してもencrypted_passwordがない場合は登録できないこと' do
-      user = build(:user, encrypted_password: "")
-      user.valid?
-      expect(user.errors[:encrypted_password]).to include("を入力してください", "は6文字以上で入力してください")
     end
 
     it 'last_nameが全角入力でなければ登録できないこと' do
