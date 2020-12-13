@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :item do
     name                     {"佐藤太郎"}
-    price                    {"300"}
+    price                    {300}
     description              {"佐藤太郎作品"}
     condition_id             {1}
     category_id              {1}
