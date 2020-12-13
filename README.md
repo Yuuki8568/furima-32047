@@ -4,16 +4,18 @@
 | name              | string    | null: false                     |
 | price             | integer   | null: false                     |
 | description       | text      | null: false                     |
-| item_condition_id | integer   | null: false, foreign_key: :true |
+| condition_id      | integer   | null: false, foreign_key: :true |
 | category_id       | integer   | null: false, foreign_key: :true |
 | shipping_area_id  | integer   | null: false, foreign_key: :true |
 | postage_type_id   | integer   | null: false, foreign_key: :true |
 | preparation_day_id| integer   | null: false, foreign_key: :true |
 | user              | references| null: false, foreign_key: :true |
+| image             | string    | null: false, foreign_key: :true |
 
 
 ### Association
 has_many :comments, dependent: :destroy
+has_many :images, dependent: :destroy
 has_one :purchase_management
 belongs_to :user
 
