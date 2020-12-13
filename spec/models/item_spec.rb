@@ -12,31 +12,6 @@ RSpec.describe Item, type: :model do
       it "全ての項目が存在すれば登録できること" do
         expect(@item).to be_valid
       end
-
-      it "商品画像があること" do
-        expect(@item.image).to be_valid
-      end
-
-      it "カテゴリーの情報があること" do
-        expect(@item.category).to be_valid
-      end
-
-      it "商品の状態についての情報があること" do
-        expect(@item.condition).to be_valid
-      end
-      it "配送料についての情報があること" do
-        expect(@item.postage_type).to be_valid
-      end
-      it "発送元の地域の情報があること" do
-        expect(@item.shipping_area).to be_valid
-      end
-      it "発送までの日数について情報があること" do
-        expect(@item.preparation_day).to be_valid
-      end
-      it "価格の範囲が¥300~¥9999999までの間なら登録できること" do
-        @item = build(:item, price: "300")
-        expect(@item).to be_valid
-      end
     end
 
     context "出品登録ができないとき" do
@@ -108,33 +83,33 @@ RSpec.describe Item, type: :model do
       end
 
       it "カテゴリーが(---)の場合は登録できないこと" do
-        @item.category_id = '---'
+        @item.category_id = 0
         @item.valid?
-        expect(@item.errors[:category_id]).to include("is not a number")
+        expect(@item.errors[:category_id]).to include("must be greater than or equal to 1")
       end
 
       it "商品の状態が(---)の場合は登録できないこと" do
-        @item.condition_id = '---'
+        @item.condition_id = 0
         @item.valid?
-        expect(@item.errors[:condition_id]).to include("is not a number")
+        expect(@item.errors[:condition_id]).to include("must be greater than or equal to 1")
       end
 
       it "配送料が(---)の場合は登録できないこと" do
-        @item.postage_type_id = '---'
+        @item.postage_type_id = 0
         @item.valid?
-        expect(@item.errors[:postage_type_id]).to include("is not a number")
+        expect(@item.errors[:postage_type_id]).to include("must be greater than or equal to 1")
       end
 
       it "発送元が(---)の場合は登録できないこと" do
-        @item.shipping_area_id = '---'
+        @item.shipping_area_id = 0
         @item.valid?
-        expect(@item.errors[:shipping_area_id]).to include("is not a number")
+        expect(@item.errors[:shipping_area_id]).to include("must be greater than or equal to 1")
       end
 
       it "発送までの日数が(---)の場合は登録できないこと" do
-        @item.preparation_day_id = '---'
+        @item.preparation_day_id = 0
         @item.valid?
-        expect(@item.errors[:preparation_day_id]).to include("is not a number")
+        expect(@item.errors[:preparation_day_id]).to include("must be greater than or equal to 1")
       end
 
       
