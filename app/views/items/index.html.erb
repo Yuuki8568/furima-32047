@@ -127,8 +127,8 @@
     <ul class='item-lists'>
 
       <%# 商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
-      <li class='list'>
-        <% @items.each do |item| %>
+      <% @items.each do |item| %>
+        <li class='list'>
           <div class='item-img-content' >
             <%= image_tag item.image, class: "item-img" if item.image.attached? %>
 
@@ -146,15 +146,15 @@
               <%= "#{item.name}" %>
             </h3>
               <div class='item-price'>
-                <span><%= "#{item.price}" %>円<br><%= '配送料負担' %></span>
+                <span><%= "#{item.price}" %>円<br><%= "#{item.postage_type.name}" %></span>
                 <div class='star-btn'>
                   <%= image_tag "star.png", class:"star-icon" %>
                   <span class='star-count'>0</span>
                 </div>
               </div>
           </div>
-        <% end %>
-      </li>
+        </li>
+      <% end %>
       <%# //商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
 
       <%# 商品がない場合のダミー %>
