@@ -13,16 +13,16 @@ class Item < ApplicationRecord
     validates :name
     validates :image
     validates :description
-    
-    with_options numericality:  {only_integer: true, greater_than_or_equal_to: 1} do
+
+    with_options numericality: { only_integer: true, greater_than_or_equal_to: 1 } do
       validates :category_id
       validates :condition_id
       validates :postage_type_id
       validates :preparation_day_id
       validates :shipping_area_id
     end
-    
-    with_options numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 } do
+
+    with_options numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 } do
       validates :price, format: { with: /\A[0-9]+\z/ }
     end
   end
